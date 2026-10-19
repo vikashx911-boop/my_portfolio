@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Vikash Kumawat — Data Analyst</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,400;0,500;0,600;1,400&family=Public+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #EEF1EC;
+    --bg-grid: #DCE3DC;
+    --panel: #FFFFFF;
+    --ink: #1C2B24;
+    --ink-soft: #4B5A52;
+    --line: #C7D0C9;
+    --accent: #2F6F4E;
+    --accent-soft: #E4EEE7;
+    --clay: #B5511F;
+    --clay-soft: #F3E3D8;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #14201A;
+      --bg-grid: #1B2A22;
+      --panel: #1B2A22;
+      --ink: #E9EFE9;
+      --ink-soft: #A9B8AE;
+      --line: #33453B;
+      --accent: #6FBE93;
+      --accent-soft: #223A2C;
+      --clay: #E38A57;
+      --clay-soft: #3A2A20;
+    }
+  }
+
+  :root[data-theme="dark"] {
+    --bg: #14201A;
+    --bg-grid: #1B2A22;
+    --panel: #1B2A22;
+    --ink: #E9EFE9;
+    --ink-soft: #A9B8AE;
+    --line: #33453B;
+    --accent: #6FBE93;
+    --accent-soft: #223A2C;
+    --clay: #E38A57;
+    --clay-soft: #3A2A20;
+  }
+
+  * { box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    margin: 0;
+    background:
+      linear-gradient(var(--bg-grid) 1px, transparent 1px) 0 0 / 100% 34px,
+      linear-gradient(90deg, var(--bg-grid) 1px, transparent 1px) 0 0 / 34px 100%,
+      var(--bg);
+    color: var(--ink);
+    font-family: 'Public Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+    line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  a { color: inherit; }
+
+  .layout {
+    display: grid;
+    grid-template-columns: 300px 1fr;
+    max-width: 1180px;
+    margin: 0 auto;
+    min-height: 100vh;
+  }
+
+  /* Sidebar */
+  .sidebar {
+    padding: 56px 32px 40px 40px;
+    border-right: 1px solid var(--line);
+    position: sticky;
+    top: 0;
+    align-self: start;
+    height: 100vh;
+    overflow-y: auto;
+  }
+
+  .sidebar-name {
+    font-family: 'Spectral', Georgia, serif;
+    font-size: 1.65rem;
+    font-weight: 600;
+    margin: 0 0 4px;
+    line-height: 1.2;
+  }
+
+  .sidebar-role {
+    color: var(--accent);
+    font-size: 0.95rem;
+    margin: 0 0 32px;
+  }
+
+  .sidebar nav { display: flex; flex-direction: column; gap: 2px; margin-bottom: 40px; }
+
+  .sidebar nav a {
+    text-decoration: none;
+    color: var(--ink-soft);
+    font-size: 0.94rem;
+    padding: 7px 0;
+    border-left: 2px solid transparent;
+    padding-left: 12px;
+    margin-left: -13px;
+    transition: color 0.15s, border-color 0.15s;
+  }
+
+  .sidebar nav a:hover { color: var(--ink); border-left-color: var(--line); }
+
+  .sidebar-contact {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    font-size: 0.88rem;
+    color: var(--ink-soft);
+    border-top: 1px solid var(--line);
+    padding-top: 24px;
+  }
+
+  .sidebar-contact a { text-decoration: none; }
+  .sidebar-contact a:hover { color: var(--accent); }
+
+  .sidebar-location {
+    margin-top: 24px;
+    font-size: 0.82rem;
+    color: var(--ink-soft);
+  }
+
+  /* Main */
+  main { padding: 56px 48px 80px; }
+
+  section { max-width: 720px; margin-bottom: 88px; scroll-margin-top: 40px; }
+  section:last-of-type { margin-bottom: 40px; }
+
+  .eyebrow {
+    color: var(--clay);
+    font-size: 0.86rem;
+    margin: 0 0 10px;
+    font-weight: 600;
+  }
+
+  h1, h2 {
+    font-family: 'Spectral', Georgia, serif;
+    font-weight: 500;
+    letter-spacing: -0.01em;
+  }
+
+  .hero h1 {
+    font-size: 2.6rem;
+    line-height: 1.15;
+    margin: 0 0 20px;
+    max-width: 12ch;
+  }
+
+  .hero p.lede {
+    font-size: 1.1rem;
+    color: var(--ink-soft);
+    max-width: 46ch;
+    margin: 0 0 36px;
+  }
+
+  .hero-chart {
+    margin-top: 8px;
+  }
+
+  .hero-chart svg { display: block; width: 100%; max-width: 480px; height: auto; }
+
+  .hero-chart-path {
+    stroke-dasharray: 620;
+    stroke-dashoffset: 620;
+    animation: draw 1.8s ease-out 0.3s forwards;
+  }
+
+  .hero-chart-dot {
+    opacity: 0;
+    animation: fadein 0.4s ease-out 1.9s forwards;
+  }
+
+  @keyframes draw { to { stroke-dashoffset: 0; } }
+  @keyframes fadein { to { opacity: 1; } }
+
+  @media (prefers-reduced-motion: reduce) {
+    .hero-chart-path { animation: none; stroke-dashoffset: 0; }
+    .hero-chart-dot { animation: none; opacity: 1; }
+  }
+
+  h2 {
+    font-size: 1.5rem;
+    margin: 0 0 28px;
+  }
+
+  .about p { max-width: 62ch; color: var(--ink-soft); font-size: 1.02rem; }
+  .about p + p { margin-top: 16px; }
+
+  /* Skills */
+  .skill-group { margin-bottom: 26px; }
+  .skill-group:last-child { margin-bottom: 0; }
+
+  .skill-group h3 {
+    font-size: 0.86rem;
+    font-weight: 600;
+    color: var(--ink);
+    margin: 0 0 12px;
+  }
+
+  .skill-tags { display: flex; flex-wrap: wrap; gap: 8px; }
+
+  .skill-tags span {
+    border: 1px solid var(--line);
+    padding: 6px 13px;
+    border-radius: 3px;
+    font-size: 0.88rem;
+    color: var(--ink-soft);
+    background: var(--panel);
+  }
+
+  /* Projects */
+  .project {
+    border-top: 1px solid var(--line);
+    padding: 28px 0;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+  .project:last-child { border-bottom: 1px solid var(--line); }
+
+  .project-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+
+  .project-title {
+    font-family: 'Spectral', Georgia, serif;
+    font-size: 1.2rem;
+    font-weight: 500;
+    margin: 0;
+  }
+
+  .project-metric {
+    color: var(--accent);
+    font-size: 0.88rem;
+    font-weight: 600;
+    white-space: nowrap;
+  }
+
+  .project p {
+    color: var(--ink-soft);
+    margin: 0;
+    max-width: 62ch;
+    font-size: 0.98rem;
+  }
+
+  .project-stack {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 7px;
+    margin-top: 4px;
+  }
+
+  .project-stack span {
+    font-size: 0.78rem;
+    color: var(--ink-soft);
+    background: var(--accent-soft);
+    padding: 3px 9px;
+    border-radius: 3px;
+  }
+
+  /* Education / certifications */
+  .cred-list { display: flex; flex-direction: column; gap: 22px; }
+
+  .cred {
+    display: grid;
+    grid-template-columns: 100px 1fr;
+    gap: 20px;
+  }
+
+  .cred-year { color: var(--ink-soft); font-size: 0.88rem; padding-top: 2px; }
+
+  .cred-title { font-weight: 600; margin: 0 0 4px; font-size: 1rem; }
+  .cred-sub { color: var(--ink-soft); font-size: 0.92rem; margin: 0; }
+
+  /* Contact */
+  .contact-box {
+    border: 1px solid var(--line);
+    background: var(--panel);
+    border-radius: 4px;
+    padding: 32px;
+  }
+
+  .contact-box p { color: var(--ink-soft); margin: 0 0 20px; max-width: 50ch; }
+
+  .contact-links { display: flex; flex-wrap: wrap; gap: 12px 28px; }
+
+  .contact-links a {
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.95rem;
+    color: var(--accent);
+    border-bottom: 1px solid transparent;
+  }
+
+  .contact-links a:hover { border-bottom-color: var(--accent); }
+
+  footer {
+    max-width: 720px;
+    color: var(--ink-soft);
+    font-size: 0.8rem;
+    padding-top: 24px;
+    border-top: 1px solid var(--line);
+  }
+
+  /* Mobile */
+  @media (max-width: 860px) {
+    .layout { grid-template-columns: 1fr; }
+    .sidebar {
+      position: relative;
+      height: auto;
+      border-right: none;
+      border-bottom: 1px solid var(--line);
+      padding: 32px 24px;
+    }
+    .sidebar nav { flex-direction: row; flex-wrap: wrap; gap: 4px 18px; margin-bottom: 24px; }
+    .sidebar nav a { padding-left: 0; margin-left: 0; border-left: none; }
+    .sidebar-contact { flex-direction: row; flex-wrap: wrap; gap: 16px; }
+    main { padding: 40px 24px 60px; }
+    .hero h1 { font-size: 2.1rem; max-width: none; }
+    .cred { grid-template-columns: 80px 1fr; }
+  }
+</style>
+</head>
+<body>
+<div class="layout">
+
+  <aside class="sidebar">
+    <p class="sidebar-name">Vikash Kumawat</p>
+    <p class="sidebar-role">Data Analyst, early career</p>
+
+    <nav>
+      <a href="#about">About</a>
+      <a href="#skills">Skills</a>
+      <a href="#projects">Projects</a>
+      <a href="#background">Background</a>
+      <a href="#contact">Contact</a>
+    </nav>
+
+    <div class="sidebar-contact">
+      <a href="mailto:vikash.kumawat@email.com">vikash.kumawat@email.com</a>
+      <a href="https://linkedin.com/in/vikashkumawat" target="_blank" rel="noopener">linkedin.com/in/vikashkumawat</a>
+      <a href="https://github.com/vikashkumawat" target="_blank" rel="noopener">github.com/vikashkumawat</a>
+    </div>
+
+    <p class="sidebar-location">Jaipur, Rajasthan, India</p>
+  </aside>
+
+  <main>
+
+    <section class="hero" id="top">
+      <p class="eyebrow">Portfolio</p>
+      <h1>I find the story hiding inside a spreadsheet.</h1>
+      <p class="lede">I'm Vikash Kumawat, a data analyst starting out — comfortable with Python, SQL and a good dashboard, and always looking for the next dataset worth digging into.</p>
+      <div class="hero-chart">
+        <svg viewBox="0 0 480 160" xmlns="http://www.w3.org/2000/svg">
+          <polyline class="hero-chart-path" points="10,120 80,105 150,128 220,80 290,95 360,45 450,30"
+            fill="none" stroke="var(--accent)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+          <circle class="hero-chart-dot" cx="450" cy="30" r="5" fill="var(--clay)"/>
+        </svg>
+      </div>
+    </section>
+
+    <section class="about" id="about">
+      <h2>About</h2>
+      <p>I got into data analytics the way a lot of people do — by getting curious about a messy spreadsheet and refusing to leave it messy. That curiosity turned into learning Python, SQL and the basics of statistics, and it hasn't let up since.</p>
+      <p>Right now I'm building my foundation: cleaning real datasets, practising exploratory analysis, and learning to turn numbers into something a non-technical reader can act on. I'm looking for my first opportunity to do that work for a team.</p>
+    </section>
+
+    <section class="skills" id="skills">
+      <h2>Skills</h2>
+
+      <div class="skill-group">
+        <h3>Languages & querying</h3>
+        <div class="skill-tags">
+          <span>Python</span><span>SQL</span><span>Pandas</span><span>NumPy</span>
+        </div>
+      </div>
+
+      <div class="skill-group">
+        <h3>Visualization & reporting</h3>
+        <div class="skill-tags">
+          <span>Excel / Google Sheets</span><span>Power BI</span><span>Matplotlib</span><span>Seaborn</span>
+        </div>
+      </div>
+
+      <div class="skill-group">
+        <h3>Foundations</h3>
+        <div class="skill-tags">
+          <span>Statistics</span><span>Data cleaning</span><span>Scikit-learn basics</span><span>A/B testing concepts</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="projects" id="projects">
+      <h2>Projects</h2>
+
+      <div class="project">
+        <div class="project-head">
+          <h3 class="project-title">Retail sales dashboard</h3>
+          <span class="project-metric">3 regions, 12 months</span>
+        </div>
+        <p>Built an interactive Power BI dashboard from a retail sales dataset to track revenue, discounts and category performance, and flagged a seasonal dip that was being masked by strong holiday-month averages.</p>
+        <div class="project-stack"><span>Power BI</span><span>Excel</span><span>DAX</span></div>
+      </div>
+
+      <div class="project">
+        <div class="project-head">
+          <h3 class="project-title">Customer churn prediction</h3>
+          <span class="project-metric">78% accuracy</span>
+        </div>
+        <p>Trained a logistic regression model in scikit-learn on a telecom customer dataset to flag likely churn, and traced the strongest signals back to contract type and monthly charges.</p>
+        <div class="project-stack"><span>Python</span><span>Scikit-learn</span><span>Pandas</span></div>
+      </div>
+
+      <div class="project">
+        <div class="project-head">
+          <h3 class="project-title">COVID-19 trend exploration</h3>
+          <span class="project-metric">State-level, India</span>
+        </div>
+        <p>Explored a public case-count dataset with Pandas and Matplotlib to compare state-level trends over time, and packaged the findings into a short written summary for a non-technical reader.</p>
+        <div class="project-stack"><span>Python</span><span>Matplotlib</span><span>Pandas</span></div>
+      </div>
+    </section>
+
+    <section class="background" id="background">
+      <h2>Background</h2>
+      <div class="cred-list">
+        <div class="cred">
+          <span class="cred-year">2023–26</span>
+          <div>
+            <p class="cred-title">B.Tech, [Your Branch]</p>
+            <p class="cred-sub">[Your College/University Name]</p>
+          </div>
+        </div>
+        <div class="cred">
+          <span class="cred-year">2025</span>
+          <div>
+            <p class="cred-title">Google Data Analytics Professional Certificate</p>
+            <p class="cred-sub">Coursera</p>
+          </div>
+        </div>
+        <div class="cred">
+          <span class="cred-year">2025</span>
+          <div>
+            <p class="cred-title">Python for Data Science</p>
+            <p class="cred-sub">[Course/Platform Name]</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="contact" id="contact">
+      <h2>Contact</h2>
+      <div class="contact-box">
+        <p>I'm looking for internship and entry-level data analyst roles. If you have a dataset worth exploring or a team that's hiring, I'd like to hear from you.</p>
+        <div class="contact-links">
+          <a href="mailto:vikash.kumawat@email.com">Email me</a>
+          <a href="https://linkedin.com/in/vikashkumawat" target="_blank" rel="noopener">LinkedIn</a>
+          <a href="https://github.com/vikashkumawat" target="_blank" rel="noopener">GitHub</a>
+        </div>
+      </div>
+    </section>
+
+    <footer>Vikash Kumawat — Data Analyst Portfolio</footer>
+
+  </main>
+</div>
+</body>
+</html>
